@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post job</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 400px;
+            height: 500px; /* Fixed height to create a scrollable area */
+            overflow-y: scroll; /* Enable vertical scrolling */
+            padding: 20px;
+            background: #c1dfc2;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin: 10px 0 5px;
+        }
+
+        input, textarea {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 100px;
+            font-size: 20px;
+            width: 95%;
+        }
+
+        button {
+            padding: 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Post job</h1>
+        <form>
+            <label for="Name">Group/Individual Name:</label>
+            <input type="text" id="Name" name="Name" required>
+
+            <label for="name">Last Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="start_address"> Starting Address:</label>
+            <textarea id="start_address" name="start_address" rows="3" required></textarea>
+
+            <label for="end_address">Ending Address:</label>
+            <textarea id="end_address" name="end_address" rows="3" required></textarea>
+
+            <label for="start_date">Starting Date:</label>
+            <input type="date" id="start_date" name="start_date" required>
+
+            <label for="end_date">Ending Date:</label>
+            <input type="date" id="end_address" name="end_address" required>
+
+
+
+            <button type="submit">Post</button>
+        </form><br>
+        
+    </div>
+</body>
+</html>

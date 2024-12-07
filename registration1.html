@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Form</title>
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-database.js"></script>
+    <!-- <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="email"],
+        .form-container input[type="password"],
+        .form-container input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .form-container button:hover {
+            background-color: #218838;
+        }
+
+        .form-container .error {
+            color: red;
+        }
+
+        p {
+            text-align: center;
+        }
+    </style> -->
+</head>
+
+<body>
+    <input type="text" id="Aadhar" placeholder="Aadhar Number" required />
+    <input type="text" id="address" placeholder="Address" required />
+    <!-- New field -->
+
+    <!-- <label for="vehicle information">vehicle information:</label> -->
+    <input type="text" id="vehicle number" placeholder="Vehicle number" name="vehicle number" required />
+
+    <!-- <label for="length">Length (in meters):</label> -->
+    <input type="number" id="length" name="length" placeholder="Length" step="0.01" min="0" required />
+
+    <!-- <label for="width">width (in meters):</label> -->
+    <input type="number" id="width" placeholder="width" name="width" step="0.01" required />
+
+    <!-- <label for="Weight">Weight (in kg):</label> -->
+    <input type="number" placeholder="Weight" id="Weight" name="Weight" min="0" required />
+    <h2>Upload Your Documents</h2>
+
+    <!-- <label for="Aadhar card">Aadhar card</label> -->
+    <input type="file" placeholder="Aadhar card id="Aadhar card" name="Aadhar card" accept=".pdf,.doc,.docx,.jpg,.png" required>
+
+    <!-- <label for="Driving licence">Driving licence</label> -->
+    <input type="file" placeholder="Driving License id="Driving licence" name="Driving licence" accept=".pdf,.doc,.docx,.jpg,.png">
+
+    <!-- <label for="Vehicle Paper">Vehicle Paper</label> -->
+    <input type="file" placeholder="Vehicle Paper" id="Vehicle Paper" name="Vehicle Paper" accept=".pdf,.doc,.docx,.jpg,.png">
+    <button type="submit">Register</button>
+</form><br>
+
+    <script>
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "firebase/app";
+        import { getAnalytics } from "firebase/analytics";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyDh-WTZi3YRaAi0rPQwH8XTpzCxq9WpPFk",
+            authDomain: "online-transportation-sy-e3c72.firebaseapp.com",
+            databaseURL: "https://online-transportation-sy-e3c72-default-rtdb.firebaseio.com",
+            projectId: "online-transportation-sy-e3c72",
+            storageBucket: "online-transportation-sy-e3c72.firebasestorage.app",
+            messagingSenderId: "147322770859",
+            appId: "1:147322770859:web:bcdbe2f3d9dbb0d3812eee",
+            measurementId: "G-700BE7GWV0"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Reference message collection
+        var messagesRef = firebase.database().ref("messages");
+
+        document.getElementById("registrationForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const firstName = document.getElementById("First").value;
+            const lastName = document.getElementById("Last").value;
+            const email = document.getElementById("email").value;
+            const username = document.getElementById("username-reg").value;
+            const password = document.getElementById("password-reg").value;
+            const phoneNumber = document.querySelector('input[type="tel"]').value;
+            const aadhar = document.getElementById("Aadhar").value;
+            const address = document.getElementById("address").value;
+            const vehicleNumber = document.getElementById("vehicle-number").value;
+            const length = document.getElementById("length").value;
+            const width = document.getElementById("width").value;
+            const weight = document.getElementById("Weight").value;
+
+            const phonePattern = /^[0-9]{10,15}$/;
+            if (!phonePattern.test(phoneNumber)) {
+                alert("Please enter a valid phone number (10-15 digits).");
+                return;
+            }
+
+            if (!firstName || !lastName || !email || !username || !password || !aadhar || !address || !vehicleNumber || !length || !width || !weight) {
+                alert("Please fill out all required fields.");
+                return;
+            }
+
+            saveMessage(firstName, lastName, email, username, password, phoneNumber, aadhar, address, vehicleNumber, length, width, weight);
+        });
+
+        function saveMessage(firstName, lastName, email, username, password, phoneNumber, aadhar, address, vehicleNumber, length, width, weight) {
+            var newMessageRef = messagesRef.push();
+            newMessageRef.set({
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                username: username,
+                password: password,
+                phoneNumber: phoneNumber,
+                aadhar: aadhar,
+                address: address,
+                vehicleNumber: vehicleNumber,
+                length: length,
+                width: width,
+                weight: weight
+            });
+
+            alert("Data saved successfully!");
+        }
+    </script>
+</body>
+
+</html>
